@@ -1,14 +1,19 @@
-import Head from 'next/head';
-import ProductCard from '../components/ProductCard';
+import Head from "next/head";
+import ProductCard from "../components/ProductCard";
+import { Product } from "@prisma/client";
+import prisma from "../db";
 
 export async function getServerSideProps() {
+  const products = await prisma.product.findMany();
   return {
-    props: { products: [] }
+    props: {
+      products,
+    },
   };
 }
 
 interface HomeProps {
-  products: any[];
+  products: Product[];
 }
 
 export default function Home(props: HomeProps) {
